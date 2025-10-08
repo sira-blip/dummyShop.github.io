@@ -1,71 +1,91 @@
-# 🧪 Visionyze – Starter _Skeleton_ (DummyJSON)
+# DummyShop
 
-> **Important :** Ce starter ne contient **aucune logique métier**. Tout est à implémenter par le candidat, en partant d’une structure propre.
+Une application e-commerce développée avec **Next.js,React,TypeScript et TailwindCSS**.
+Elle permet aux utilisateurs de parcourir des produits, gérer le panier local, passer des commandes et visualiser des métriques en gardant un design responsive et une expérience utilisateur fluide.
 
-## 🚀 Démarrage
+## Démarage
+
+### cloner le repository
+
+```bash
+git clone <url-repository>
+cd dummyShop
+```
+
+### configurer les variables d'environement
 
 ```bash
 cp .env.example .env
-npm i
-npm run dev
-# http://localhost:3000
+
 ```
 
-`NEXT_PUBLIC_API_BASE=https://dummyjson.com`
+### Installer les dépendances
 
-## 🎯 Objectif
+```bash
+npm i
+```
 
-Construire un mini dashboard e‑commerce **front-only** en consommant l’API publique **DummyJSON** (uniquement GET).  
-Les **mutations** (panier, checkout, commandes locales) sont **simulées côté front**.
+### Lancer l'application
 
-## 📡 Endpoints à consommer
+```bash
+npm run dev
 
-- `GET /products?limit=&skip=`
-- `GET /products/search?q=&limit=&skip=`
-- `GET /products/categories`
-- `GET /products/category/{category}?limit=&skip=`
-- `GET /carts?limit=&skip=`
-- `GET /users?limit=&skip=`
+```
 
-## ✅ À implémenter (obligatoire)
+## Fonctionnalités
 
-- **Auth façade** (session simulée) + **guards** (rediriger `/login` si non connecté).
-- **/products** : recherche (debounce), filtres catégories, pagination, états UI (loading/erreur/empty).
-- **/orders** : lister **carts** DummyJSON (readonly) + (optionnel) section **“Local Orders”** créées après checkout simulé.
-- **/metrics** : KPI users (DummyJSON), orders 7j & revenue 7j (locaux), mini chart.
-- **Qualité** : code typé, composants réutilisables, accessibilité, responsive.
+### Gestion des Produits
 
-## 🧩 Fichiers clés à compléter
+- Affichage des produits depuis l'api DummyJSON.
+- Recherche avec debounce pour le filtrage instantanné.
+- Filtrage par catégorie
+- Pagination.
+- Gestion des états quand aucun produit trouvé et au cas d'erreur.
 
-- `src/lib/api.ts` : **toutes** les fonctions fetch sont **TODO** (à écrire).
-- `src/lib/auth.ts` : **TODO** (isAuthed, setToken, clearToken).
-- `src/components/Guard.tsx` : activer la redirection une fois l’auth prête.
-- `src/app/*/page.tsx` : implémentez chaque page (marqueurs **TODO**).
+### Panier
 
-## 🧪 Tests (min)
+- Ajouter des produits au panier.
+- Affichage dynamique de nombre d'articles et du prix total.
+- Sidebar du panier rétractable.
+- Checkout stocké dans localStorage.
 
-- 2 tests composants + 1 test intégration léger (au choix).
+### Commandes
 
----
+- Affichage des commandes depuis l'api DummyJSON.
+- Affichage des commandes locales stocké dans localStorage.
+- Filtrage des commande locales selon la durée 7 jours,30 jours, ou toutes.
+- Cartes de commande détaillées avec produit,quantité,prix et prix total.
+- Les commandes locales et celle de l'api sont affichées séparément pour une meilleure organisation.
 
-## ⏱ Modalités
+### Dashboard de métriques
 
-- **Fenêtre :** 48 h
-- **Charge attendue :** 6–8 h
-- **Livrables :**
-  - Lien Git **ou** archive .zip
-  - `README.md` clair (setup, choix techniques)
-  - `.env.example` complet
-- **Anti‑IA :** documentation autorisée ; **pas** de génération massive de code. Débrief 30 min sur **ton** code.
+- KPI pour les commandes locales effectuées et le revenue.
+- chart qui represente le revenue des commande locales dans les 7 derniers jours en utilisant Rechart.
 
----
+### Navigation
 
-## 📈 Évaluation (100)
+- **NavBar responsive:**
+  - Desktop: lien visibles en ligne.
+  - Mobile:liens dans un menu dropdown.
+- Icone du panier qui affiche le nombres des articles ajoutés.
 
-- Fonctionnel (pages & flux) – 35
-- Qualité code & typage – 25
-- UX/UI (états, responsive, a11y) – 20
-- React Query (cache/pagination/retry) – 10
-- Tests & DX – 10
+### Testes avec React testing Library
 
-Bonne chance ! 🚀
+- Deux Testes unitaires pour:
+  - tester le bouton ajouter au panier (AddToCardButton)
+  - testet le composant qui affiche les commande locales( OrderCardLocal )
+- Un test d'integration pour vérifier le fonctionnement de ProductsCard + AddToCardButton + CartProvider(et useCart le context qui gère le panier).
+
+### Authentification
+
+- Le composant Guard redirige vers /login si non authentifié.
+- Façade simple pour la vérification de token en utilisant sessionStorage.
+
+## Le stack technique
+
+- Framework : Next.js
+- Langage : TypeScript
+- UI : tailwindCSS ,Lucide Icons
+- State Management : React Context (CartContext)
+- Data Fetching : React query
+- Tests : React Testing Library,Jest
